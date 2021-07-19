@@ -8,9 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var monitor = NetworkMonitor()
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Spacer()
+            switch monitor.connectionStatus {
+            case .connected(let isExpensive, let isConstrained):
+                Text("Connected!")
+                    .padding()
+                Text("Is Expensive: \(isExpensive ? "true" : "false")")
+                    .padding()
+                Text("Is Constrianed: \(isConstrained ? "true" : "false")")
+                    .padding()
+            case .disconnected:
+                Text("Disconnected")
+            case .unknown:
+                Text("Unknown")
+            }
+            Spacer()
+        }
     }
 }
 
